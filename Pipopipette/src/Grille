@@ -1,0 +1,57 @@
+public class Grille {
+    private int dimension;
+    private boolean[] etat;
+
+    public Grille(int dimension) {
+        this.dimension = dimension;
+        this.etat = new boolean[(dimension*dimension+dimension)*2];
+    }
+
+    public void mettreAJour(int i){
+        this.etat[i] = true;
+    }
+
+    public void affichage() {
+        String affichageHorizontal="";
+        String affichageVertical="";
+        for(int i=0; i<dimension*dimension+dimension; i++) {
+            if(etat[i])//  s'il y a une arête
+                affichageHorizontal = "*------";
+            else {
+                if(i<10)
+                    affichageHorizontal = "*\033[1;31m (0"+i+") \033[0m";
+                else
+                    affichageHorizontal="*\033[1;31m ("+i+") \033[0m";
+            }
+            if((i+1)%dimension== 0) {
+                if(!(i==(etat.length-1)/2))
+                    for(int j=i-dimension+1+(i/dimension); j<i+2+(i/dimension);j++){
+                        if(etat[j+dimension*dimension+dimension])
+                            affichageVertical += "|     ";
+                        else {
+                            if(j+dimension*dimension+dimension < 10)
+                                affichageVertical+="\033[1;32m[0"+(j+dimension*dimension+dimension)+"]   \033[0m";
+                            else
+                                affichageVertical+="\033[1;32m["+(j+dimension*dimension+dimension)+"]   \033[0m";
+                        }
+                    }
+                System.out.println(affichageHorizontal + "*\n" + affichageVertical);
+                affichageVertical="";
+            } else {
+                System.out.print(affichageHorizontal);
+            }
+        }
+    }
+
+    public void jouer() {
+        int i;
+        boolean f=true;
+        while(f) {
+            i = (int) (Math.random() * this.etat.length);
+            if (this.etat[i] == false) {
+                this.etat[i] = true ;
+                f = false;
+            }
+        }
+    }
+}
