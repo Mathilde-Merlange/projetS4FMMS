@@ -1,0 +1,31 @@
+public class Arete {
+    private Sommet debut ;
+    private Sommet fin;
+
+    public Arete(){
+        this.debut=null;
+        this.fin=null;
+    }
+
+    public Arete(Sommet debut,Sommet fin){ //faut regarder si cette arrete est déjà mise ou pas
+        this.debut=debut;
+        this.fin=fin;
+
+    }
+
+    public Sommet getDebut() {
+        return debut;
+    }
+
+    public void setDebut(Sommet debut) {
+        this.debut = debut;
+    }
+
+    public Sommet getFin() {
+        return fin;
+    }
+
+    public void setFin(Sommet fin) {
+        this.fin = fin;
+    }
+}
