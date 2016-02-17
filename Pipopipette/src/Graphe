@@ -1,0 +1,86 @@
+import java.util.Iterator;
+import java.util.LinkedList;
+
+public class Graphe {
+    LinkedList<Sommet> listeSommets = new LinkedList<Sommet>();
+    LinkedList<Sommet> sommetTraite = new LinkedList<Sommet>();
+    LinkedList<Sommet> sommetAtteint = new LinkedList<Sommet>();
+
+
+    // private boolean[] etat;
+    private int dimension;
+   /* LinkedList succ = new LinkedList();
+    boolean[] traite = new boolean[];*/
+
+    //listeSommets contient tous les sommets  peres , ensuite chaque sommet pere
+    // contient lui une liste de ses somments successeurs donc on a besoin d'une liste de listes .
+
+    public void parcoursLargeur(LinkedList listeSommets , Sommet s){
+        for(Iterator it = listeSommets.iterator() ; it.hasNext();){
+            Sommet x = (Sommet) it.next() ;
+            //etat[x]=false;
+            x.setEtat(1); //etat=0 -> non atteint , etat=1->atteint,  etat=2 -> traité
+        }
+        //etat[s]=true;
+        s.setEtat(1);
+        sommetAtteint.add(s);
+        while (!sommetAtteint.isEmpty()){
+            Sommet s1 = sommetAtteint.getFirst();
+            for(Iterator it2 = s1.getSucc().iterator(); it2.hasNext();){
+                Sommet x2 = (Sommet) it2.next();
+                if(x2.getEtat()==0){
+                    //etat[x2] = true ;
+                    x2.setEtat(1);
+                    //pere[x2] = s1 ;
+                    x2.setPere(s1);
+                    sommetAtteint.addLast(x2);
+                }
+            }
+            //etat[s1]=true; //traite
+            s1.setEtat(2);
+            sommetTraite.add(s1);
+        }
+    }
+
+
+   /* public void creerSommets(int dim){
+        int x =(getDimension()+ 1)*(getDimension()+ 1) ;
+        for (int i=0;i<x;i++){
+            Sommet s = new Sommet();
+            listeSommets.add(s);
+        }
+    }*/
+   public void creerSommets(){
+       int x =(getDimension()+ 1)*(getDimension()+ 1) ;
+       for (int i=0;i<x;i++){
+           Sommet s = new Sommet(i,0,null);
+           listeSommets.add(s);
+       }
+   }
+
+    public void ajoutArete(int arete) {
+        arete++;
+        if(arete<=(getDimension()+1)*2) {
+            int idSommet = arete + arete % (getDimension()+1);
+            Sommet s = getSommet(idSommet);
+            s.ajoutSucc(getSommet(idSommet+1));
+        } else {
+            int idSommet = arete - (getDimension()+1)*2;
+            Sommet s = getSommet(idSommet);
+            s.ajoutSucc(getSommet(idSommet+getDimension()+1));
+        }
+
+    }
+
+
+    public int getDimension() { return dimension; }
+
+    public void setDimension(int dimension) { this.dimension = dimension; }
+
+    public Object[] getListeSommets(){ return listeSommets.toArray(); }
+
+    public void setListeSommets(LinkedList<Sommet> listeSommets) { this.listeSommets = listeSommets; }
+
+    public Sommet getSommet(int id) {return null;} // retourne sommet avec le numéro id
+
+}
