@@ -1,0 +1,63 @@
+import java.util.Set;
+import java.util.TreeSet;
+
+public class Sommet {
+    private int id;
+    private int etat;
+    private Sommet pere ;
+    private Set<Sommet> succ;
+
+    public Sommet(){
+        this.etat=0;
+        this.pere=null;
+        // this.graphe.listeSommets.add(this);  pour ajouter le sommet au graphe
+        succ = new TreeSet<Sommet>();
+    }
+
+    public Sommet(int nom,int etat,Sommet pere){
+        this.id =nom;
+        this.etat=etat;
+        this.pere=pere;
+        //this.graphe.listeSommets.add(this);
+        succ = new TreeSet<Sommet>();
+    }
+
+    public Set<Sommet> getSucceseurs(Sommet u){
+        return succ;
+    }
+
+    public boolean existeSucc(Sommet u){
+        return getSucceseurs(this).size()!=0 ;
+    }
+
+    /*public Object[] getSucceseurs(Sommet u){
+        LinkedList<Sommet> succ = new LinkedList <Sommet>();
+        ListIterator<Arete> arretes = this.graphe.listeArretes.listIterator();
+        while (arretes.hasNext()){
+            Arete temp = arretes.next();
+            if(temp.getDebut().getId().equals(u.getId())){
+                succ.add(temp.getFin());
+            }
+        }
+        return succ.toArray();
+    }*/
+
+
+    public  int getId(){ return this.id; }
+
+    public Set<Sommet> getSucc() { return succ; }
+
+    public void setSucc(Set<Sommet> succ) { this.succ = succ; }
+
+    public void ajoutSucc(Sommet succ) {
+        this.succ.add(succ);
+    }
+
+    public int getEtat() { return etat; }
+
+    public void setEtat(int etat) { this.etat = etat; }
+
+    public Sommet getPere() { return pere; }
+
+    public void setPere(Sommet pere) { this.pere = pere; }
+}
