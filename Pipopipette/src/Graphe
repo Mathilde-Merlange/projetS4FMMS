@@ -6,6 +6,27 @@ public class Graphe {
     LinkedList<Sommet> sommetTraite = new LinkedList<Sommet>();
     LinkedList<Sommet> sommetAtteint = new LinkedList<Sommet>();
 
+  public void dot(){
+        try {
+            PrintWriter writer = new PrintWriter("graphe.dot", "UTF-8");
+            writer.println("digraph G {" +
+                    "node [shape=box fontname = \"Courier New\" color=\"sienna\"]\n" +
+                    "edge [fontname = \"Times\" fontcolor=\"sienna\"]");
+            for(Sommet s : listeSommets) {
+                if(s.getSucc().isEmpty()){
+                    writer.println(s.getNom()+";");
+                }else {
+                    writer.print(s.getNom());
+                    for(Sommet succ : s.getSucc()) {
+                        writer.print(" -> "+succ.getNom());
+                    }
+                    writer.println(";");
+                }
+            }
+            writer.println("}");
+            writer.close();
+        } catch (Exception e){}
+    }
 
     // private boolean[] etat;
     private int dimension;
